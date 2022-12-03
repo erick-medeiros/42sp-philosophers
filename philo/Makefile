@@ -11,6 +11,8 @@ OBJ_DIR = obj/
 
 HEADERS = philo.h
 FILES = main.c
+FILES += init/arguments.c
+FILES += utils/ft_atoi.c
 
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(FILES:.c=.o))
@@ -40,12 +42,18 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 # utils
 
 norm:
-	norminette | grep Error || true
+	@echo "norminette include src | grep Error"
+	@norminette include src | grep Error || true
 
-install:
-	sudo apt install bear
+install: # ubuntu
+	sudo apt install bear clang-format libcriterion-dev
 
 bear:
 	bear -- make re
 
-.PHONY: all clean fclean re norm install bear
+tests: norm
+	@make -s -C tests
+	./tests/unit-tests
+	@make -s -C tests clean
+
+.PHONY: all clean fclean re norm install bear tests
