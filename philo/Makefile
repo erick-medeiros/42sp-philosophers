@@ -2,6 +2,7 @@ NAME = philo
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g
+LDFLAGS = -pthread
 CC = cc
 RM = rm -fr
 
@@ -10,8 +11,9 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 
 HEADERS = philo.h
+
 FILES = main.c
-FILES += init/arguments.c
+FILES += check.c destroy.c init.c log.c routine.c
 FILES += utils/ft_atoi.c
 
 SRC = $(addprefix $(SRC_DIR), $(FILES))
@@ -21,7 +23,7 @@ INC = $(addprefix $(INC_DIR), $(HEADERS))
 REQUIRED_DIRS = $(sort $(dir $(OBJ)))
 
 $(NAME): $(REQUIRED_DIRS) $(INC) $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 all: $(NAME)
 
