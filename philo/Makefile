@@ -6,15 +6,13 @@ LDFLAGS = -pthread
 CC = cc
 RM = rm -fr
 
-INC_DIR = include/
 SRC_DIR = src/
 OBJ_DIR = obj/
 
-HEADERS = philo.h
+HEADERS = src/philo.h
 
 FILES = main.c
-FILES += check.c destroy.c init.c log.c routine.c
-FILES += utils/ft_atoi.c
+FILES += check.c destroy.c init.c log.c routine.c utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(FILES:.c=.o))
@@ -39,7 +37,7 @@ $(REQUIRED_DIRS):
 	@mkdir -p $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # utils
 
@@ -52,6 +50,9 @@ install: # ubuntu
 
 bear:
 	bear -- make re
+
+leaks:
+	valgrind --tool=helgrind --history-level=approx ./$(NAME)
 
 tests: norm
 	@make -s -C tests

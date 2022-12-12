@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/03 20:31:41 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:47:21 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ struct s_data
 	int		time_to_sleep;
 	int		must_eat;
 	t_mutex	log_mutex;
+	t_mutex	fork_mutex;
 	t_philo	*philosophers;
 };
 
@@ -46,6 +47,8 @@ struct s_philo
 {
 	int			number;
 	pthread_t	tid;
+	t_data		*data;
+	t_bool		is_dead;
 };
 
 // libft
@@ -61,6 +64,9 @@ void	destroy_data(t_data *data);
 
 // routine
 void	*dinner_routine(void *p);
+t_bool	philo_eat(t_philo *philo);
+t_bool	philo_think(t_philo *philo);
+t_bool	philo_sleep(t_philo *philo);
 
 // logs
 void	state_log(t_philo *philo, const char *state);
