@@ -12,7 +12,7 @@ OBJ_DIR = obj/
 HEADERS = src/philo.h
 
 FILES = main.c
-FILES += check.c destroy.c init.c log.c routine.c utils.c
+FILES += check.c data.c log.c routine.c utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(FILES:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/12 15:47:21 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/12 19:35:30 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,18 @@ struct s_data
 	int		time_to_sleep;
 	int		must_eat;
 	t_mutex	log_mutex;
-	t_mutex	fork_mutex;
+	t_mutex	*forks;
 	t_philo	*philosophers;
 };
 
 struct s_philo
 {
-	int			number;
+	int			id;
 	pthread_t	tid;
 	t_data		*data;
 	t_bool		is_dead;
+	t_bool		is_pair;
 };
-
-// libft
-int		ft_atoi(const char *str);
-int		ft_isdigit(int c);
 
 // init
 t_bool	check_arguments(int argc, char *argv[]);
@@ -70,5 +67,10 @@ t_bool	philo_sleep(t_philo *philo);
 
 // logs
 void	state_log(t_philo *philo, const char *state);
+
+// libft utils
+int		ft_atoi(const char *str);
+int		ft_isdigit(int c);
+int		ft_mssleep(int ms);
 
 #endif
