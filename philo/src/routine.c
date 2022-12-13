@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/13 10:15:39 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:30:25 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ t_bool	philo_eat(t_philo *philo)
 		pthread_mutex_lock(right_fork);
 		state_log(philo, "has taken a fork");
 	}
+	state_log(philo, "is eating");
+	mssleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(left_fork);
 	pthread_mutex_unlock(right_fork);
-	state_log(philo, "is eating");
 	return (TRUE);
 }
 

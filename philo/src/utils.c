@@ -6,58 +6,21 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:09:23 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/12 19:12:39 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:18:11 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-int	ft_isspace(int c)
-{
-	if (c == ' ' || c == '\f' || c == '\n')
-		return (1);
-	if (c == '\r' || c == '\t' || c == '\v')
-		return (1);
-	return (0);
-}
-
-int	ft_atoi(const char *str)
-{
-	int		sin;
-	long	val;
-	long	pre;
-
-	if (!str)
-		return (0);
-	sin = 1;
-	val = 0;
-	while (ft_isspace(*str))
-		++str;
-	if (*str == '-' || *str == '+')
-		if (*str++ == '-')
-			sin = -1;
-	while (ft_isdigit(*str))
-	{
-		pre = val;
-		val = (val * 10) + (*str++ - '0');
-		if (val < pre)
-		{
-			if (sin == 1)
-				return (-1);
-			return (0);
-		}
-	}
-	return (val * sin);
-}
-
-int	ft_mssleep(int ms)
+int	mssleep(int ms)
 {
 	return (usleep(ms * 1000));
+}
+
+long	timestamp_in_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }

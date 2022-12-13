@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/13 10:11:05 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:34:14 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct s_data
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		must_eat;
+	long	start_time;
 	t_mutex	log_mutex;
 	t_mutex	*forks;
 	t_philo	*philosophers;
@@ -69,9 +70,10 @@ t_bool	philo_sleep(t_philo *philo);
 // logs
 void	state_log(t_philo *philo, const char *state);
 
-// libft utils
+// utils
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
-int		ft_mssleep(int ms);
+int		mssleep(int ms);
+long	timestamp_in_ms(void);
 
 #endif
