@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/12 19:33:54 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:11:27 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static t_bool	init_philosophers(t_data *data)
 	while (++i < data->num_of_philos)
 	{
 		data->philosophers[i].id = i;
+		data->philosophers[i].num = i + 1;
 		data->philosophers[i].is_pair = ((i + 1) % 2 != 0);
 		data->philosophers[i].tid = 0;
 		data->philosophers[i].data = data;

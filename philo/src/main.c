@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:41:45 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/12 19:17:32 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:07:42 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,8 @@ int	main(void)
 		return (EXIT_FAILURE);
 	i = -1;
 	while (++i < data.num_of_philos)
-		if (data.philosophers[i].is_pair)
-			pthread_create(&data.philosophers[i].tid,
-				NULL, dinner_routine, (void *)(&data.philosophers[i]));
-	i = -1;
-	while (++i < data.num_of_philos)
-		if (!data.philosophers[i].is_pair)
-			pthread_create(&data.philosophers[i].tid,
-				NULL, dinner_routine, (void *)(&data.philosophers[i]));
+		pthread_create(&data.philosophers[i].tid,
+			NULL, dinner_routine, (void *)(&data.philosophers[i]));
 	i = -1;
 	while (++i < data.num_of_philos)
 		pthread_join(data.philosophers[i].tid, NULL);

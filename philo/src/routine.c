@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/12 19:35:26 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:15:39 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,21 @@ t_bool	philo_eat(t_philo *philo)
 	t_mutex	*right_fork;
 
 	left_fork = &philo->data->forks[philo->id];
-	right_fork = &philo->data->forks[(philo->id + 1)
-		% philo->data->num_of_philos];
-	pthread_mutex_lock(left_fork);
-	state_log(philo, "has taken a fork");
-	pthread_mutex_lock(right_fork);
-	state_log(philo, "has taken a fork");
+	right_fork = &philo->data->forks[philo->num % philo->data->num_of_philos];
+	if (philo->is_pair)
+	{
+		pthread_mutex_lock(right_fork);
+		state_log(philo, "has taken a fork");
+		pthread_mutex_lock(left_fork);
+		state_log(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(left_fork);
+		state_log(philo, "has taken a fork");
+		pthread_mutex_lock(right_fork);
+		state_log(philo, "has taken a fork");
+	}
 	pthread_mutex_unlock(left_fork);
 	pthread_mutex_unlock(right_fork);
 	state_log(philo, "is eating");

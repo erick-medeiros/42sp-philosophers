@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/12 19:35:30 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:11:05 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ struct s_data
 struct s_philo
 {
 	int			id;
+	int			num;
 	pthread_t	tid;
 	t_data		*data;
 	t_bool		is_dead;
