@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 17:14:01 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:19:10 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static t_bool	init_error(t_data *data);
 
 t_bool	init_data(t_data *data, int argc, char *argv[])
 {
+	memset(data, 0, sizeof(t_data));
 	data->start_time = timestamp_in_ms();
 	data->num_of_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
