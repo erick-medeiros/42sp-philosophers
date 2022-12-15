@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:27:04 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:00:36 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:02:02 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_amount_of_meals(t_philo *philo)
 	pthread_mutex_unlock(&philo->last_meal_mutex);
 }
 
-long	get_last_meal_time(t_philo *philo)
+t_msec	get_last_meal_time(t_philo *philo)
 {
 	int	last_meal;
 

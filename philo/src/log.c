@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:51:59 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 11:45:07 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:03:55 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	state_log(t_philo *philo, t_state state)
 {
-	long	timestamp;
+	t_msec	timestamp;
 	char	*str;
 
 	pthread_mutex_lock(&philo->data->log_mutex);

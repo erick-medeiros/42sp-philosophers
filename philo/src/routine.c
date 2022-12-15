@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:43:06 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:03:27 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	*monitor_routine(void *arg)
 {
 	t_data	*data;
 	int		i;
-	long	last_meal;
+	t_msec	last_meal;
 
 	data = (t_data *)arg;
 	while (1)

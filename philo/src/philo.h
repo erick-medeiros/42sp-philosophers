@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:03:44 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:04:14 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_state	t_state;
 typedef struct s_data	t_data;
 typedef struct s_philo	t_philo;
 typedef pthread_mutex_t	t_mutex;
+typedef long			t_msec;
 
 enum e_bool
 {
@@ -48,7 +49,7 @@ struct s_data
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			must_eat;
-	long		start_time;
+	t_msec		start_time;
 	pthread_t	monitor_tid;
 	t_bool		dinner_is_over;
 	t_mutex		log_mutex;
@@ -62,7 +63,7 @@ struct s_philo
 	int			id;
 	int			num;
 	pthread_t	tid;
-	long		last_meal_time;
+	t_msec		last_meal_time;
 	t_mutex		last_meal_mutex;
 	int			amount_of_meals;
 	t_mutex		amount_of_meals_mutex;
@@ -91,7 +92,7 @@ void	*monitor_routine(void *arg);
 // dinner
 int		get_amount_of_meals(t_philo *philo);
 void	set_amount_of_meals(t_philo *philo);
-long	get_last_meal_time(t_philo *philo);
+t_msec	get_last_meal_time(t_philo *philo);
 void	set_last_meal_time(t_philo *philo);
 
 // finish
@@ -104,7 +105,7 @@ void	state_log(t_philo *philo, t_state state);
 // utils
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
-int		ft_mssleep(long ms);
-long	timestamp_in_ms(void);
+int		ft_mssleep(t_msec ms);
+t_msec	timestamp_in_ms(void);
 
 #endif

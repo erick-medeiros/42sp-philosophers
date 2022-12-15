@@ -6,15 +6,15 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:09:23 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 11:00:54 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:04:20 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_mssleep(long ms)
+int	ft_mssleep(t_msec ms)
 {
-	long	start;
+	t_msec	start;
 
 	start = timestamp_in_ms();
 	while (ms > timestamp_in_ms() - start)
@@ -22,7 +22,7 @@ int	ft_mssleep(long ms)
 	return (0);
 }
 
-long	timestamp_in_ms(void)
+t_msec	timestamp_in_ms(void)
 {
 	struct timeval	tv;
 
