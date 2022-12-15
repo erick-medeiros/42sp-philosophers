@@ -6,19 +6,19 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 17:04:14 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:17:01 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/time.h>
-# include <unistd.h>
+# include <pthread.h> // thread...
+# include <stdio.h> // printf
+# include <stdlib.h> // malloc, free
+# include <string.h> // memset
+# include <sys/time.h> // gettimeofday
+# include <unistd.h> // usleep, write
 
 typedef enum e_bool		t_bool;
 typedef enum e_state	t_state;
