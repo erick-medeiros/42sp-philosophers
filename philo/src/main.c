@@ -6,18 +6,16 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:41:45 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 15:35:47 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:10:44 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
-	const int	argc = 5;
-	const char	*argv[] = {"./philo", "3", "500", "200", "200", 0};
-	t_data		data;
-	int			i;
+	t_data	data;
+	int		i;
 
 	if (!check_arguments(argc, (char **)argv))
 		return (EXIT_FAILURE);
