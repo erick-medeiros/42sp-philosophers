@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:45:42 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:14:01 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,6 @@ t_bool	init_data(t_data *data, int argc, char *argv[])
 	return (TRUE);
 }
 
-void	destroy_data(t_data *data)
-{
-	int	i;
-
-	if (data->philosophers)
-	{
-		i = -1;
-		while (++i < data->num_of_philos)
-		{
-			pthread_mutex_destroy(&data->philosophers[i].last_meal_mutex);
-			pthread_mutex_destroy(&data->philosophers[i].amount_of_meals_mutex);
-		}
-		free(data->philosophers);
-	}
-	if (data->forks)
-	{
-		i = -1;
-		while (++i < data->num_of_philos)
-			pthread_mutex_destroy(&data->forks[i]);
-		free(data->forks);
-	}
-	pthread_mutex_destroy(&data->log_mutex);
-}
-
 static t_bool	init_philosophers(t_data *data)
 {
 	t_philo	*philo;
@@ -72,7 +48,6 @@ static t_bool	init_philosophers(t_data *data)
 	data->philosophers = malloc(sizeof(t_philo) * data->num_of_philos);
 	if (data->philosophers == NULL)
 		return (FALSE);
-	memset(data->philosophers, 0, sizeof(t_philo) * data->num_of_philos);
 	i = -1;
 	while (++i < data->num_of_philos)
 	{
@@ -97,9 +72,9 @@ static t_bool	init_forks(t_data *data)
 	t_philo	*philo;
 	int		i;
 
-	data->forks = malloc(sizeof(t_mutex) * (data->num_of_philos + 1));
-	i = 0;
-	while (i < data->num_of_philos)
+	data->forks = malloc(sizeof(t_mutex) * data->num_of_philos);
+	i = -1;
+	while (++i < data->num_of_philos)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 			return (FALSE);
@@ -116,9 +91,32 @@ static t_bool	init_forks(t_data *data)
 			philo->first_fork = philo->left_fork;
 			philo->second_fork = philo->right_fork;
 		}
-		++i;
 	}
 	return (TRUE);
+}
+
+void	destroy_data(t_data *data)
+{
+	int	i;
+
+	if (data->philosophers)
+	{
+		i = -1;
+		while (++i < data->num_of_philos)
+		{
+			pthread_mutex_destroy(&data->philosophers[i].last_meal_mutex);
+			pthread_mutex_destroy(&data->philosophers[i].amount_of_meals_mutex);
+		}
+		free(data->philosophers);
+	}
+	if (data->forks)
+	{
+		i = -1;
+		while (++i < data->num_of_philos)
+			pthread_mutex_destroy(&data->forks[i]);
+		free(data->forks);
+	}
+	pthread_mutex_destroy(&data->log_mutex);
 }
 
 static t_bool	init_error(t_data *data)

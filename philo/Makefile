@@ -1,6 +1,6 @@
 NAME = philo
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -pthread
 CC = cc
 RM = rm -fr
@@ -50,7 +50,7 @@ bear:
 	bear -- make re
 
 leaks:
-	valgrind --tool=helgrind --history-level=approx ./$(NAME)
+	valgrind --tool=helgrind --history-level=approx ./$(NAME) 5 500 200 200
 
 tests: norm
 	@make -s -C tests
