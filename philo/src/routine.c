@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:03:53 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:22:47 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int	philo_eat(t_philo *philo)
 {
 	if (dinner_is_over(philo->data))
 		return (-1);
+	if (philo->data->must_eat != -1
+		&& get_amount_of_meals(philo) >= philo->data->must_eat)
+	{
+		finish_dinner(philo->data);
+		return (-1);
+	}
 	pthread_mutex_lock(philo->first_fork);
 	pthread_mutex_lock(philo->second_fork);
 	if (dinner_is_over(philo->data))
