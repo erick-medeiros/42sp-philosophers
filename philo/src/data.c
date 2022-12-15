@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:08:30 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:45:42 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_bool	init_philosophers(t_data *data);
 static t_bool	init_forks(t_data *data);
-static	t_bool	init_error(t_data *data);
+static t_bool	init_error(t_data *data);
 
 t_bool	init_data(t_data *data, int argc, char *argv[])
 {
@@ -121,7 +121,7 @@ static t_bool	init_forks(t_data *data)
 	return (TRUE);
 }
 
-static	t_bool	init_error(t_data *data)
+static t_bool	init_error(t_data *data)
 {
 	destroy_data(data);
 	return (FALSE);
