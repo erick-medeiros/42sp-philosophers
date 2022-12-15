@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 16:22:47 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:43:06 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	*dinner_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->data->num_of_philos == 1)
+	{
+		state_log(philo, TAKE_FORK);
+		return (0);
+	}
 	while (1)
 	{
 		if (philo_eat(philo))
@@ -80,20 +85,18 @@ void	*monitor_routine(void *arg)
 	t_data	*data;
 	int		i;
 	long	last_meal;
-	int		amount_of_meals;
 
 	data = (t_data *)arg;
 	while (1)
 	{
-		ft_mssleep(10);
+		ft_mssleep(1);
 		if (dinner_is_over(data))
 			return (NULL);
 		i = -1;
 		while (++i < data->num_of_philos)
 		{
 			last_meal = get_last_meal_time(&data->philosophers[i]);
-			amount_of_meals = get_amount_of_meals(&data->philosophers[i]);
-			if (last_meal > data->time_to_die && amount_of_meals > 0)
+			if (last_meal > data->time_to_die)
 			{
 				state_log(&data->philosophers[i], DIED);
 				finish_dinner(data);
