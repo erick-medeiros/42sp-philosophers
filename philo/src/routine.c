@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/13 11:30:25 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:03:53 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,83 @@ void	*dinner_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	philo_think(philo);
-	philo_eat(philo);
-	philo_sleep(philo);
+	while (1)
+	{
+		if (philo_eat(philo))
+			return (0);
+		if (philo_sleep(philo))
+			return (0);
+		if (philo_think(philo))
+			return (0);
+	}
+	return (0);
+}
+
+int	philo_eat(t_philo *philo)
+{
+	if (dinner_is_over(philo->data))
+		return (-1);
+	pthread_mutex_lock(philo->first_fork);
+	pthread_mutex_lock(philo->second_fork);
+	if (dinner_is_over(philo->data))
+	{
+		pthread_mutex_unlock(philo->first_fork);
+		pthread_mutex_unlock(philo->second_fork);
+		return (-1);
+	}
+	state_log(philo, TAKE_FORK);
+	state_log(philo, TAKE_FORK);
+	set_last_meal_time(philo);
+	set_amount_of_meals(philo);
+	state_log(philo, EATING);
+	ft_mssleep(philo->data->time_to_eat);
+	pthread_mutex_unlock(philo->first_fork);
+	pthread_mutex_unlock(philo->second_fork);
+	return (0);
+}
+
+int	philo_sleep(t_philo *philo)
+{
+	if (dinner_is_over(philo->data))
+		return (-1);
+	state_log(philo, SLEEPING);
+	ft_mssleep(philo->data->time_to_sleep);
+	return (0);
+}
+
+int	philo_think(t_philo *philo)
+{
+	if (dinner_is_over(philo->data))
+		return (-1);
+	state_log(philo, THINKING);
+	return (0);
+}
+
+void	*monitor_routine(void *arg)
+{
+	t_data	*data;
+	int		i;
+	long	last_meal;
+	int		amount_of_meals;
+
+	data = (t_data *)arg;
+	while (1)
+	{
+		ft_mssleep(10);
+		if (dinner_is_over(data))
+			return (NULL);
+		i = -1;
+		while (++i < data->num_of_philos)
+		{
+			last_meal = get_last_meal_time(&data->philosophers[i]);
+			amount_of_meals = get_amount_of_meals(&data->philosophers[i]);
+			if (last_meal > data->time_to_die && amount_of_meals > 0)
+			{
+				state_log(&data->philosophers[i], DIED);
+				finish_dinner(data);
+				return (NULL);
+			}
+		}
+	}
 	return (NULL);
-}
-
-t_bool	philo_eat(t_philo *philo)
-{
-	t_mutex	*left_fork;
-	t_mutex	*right_fork;
-
-	left_fork = &philo->data->forks[philo->id];
-	right_fork = &philo->data->forks[philo->num % philo->data->num_of_philos];
-	if (philo->is_pair)
-	{
-		pthread_mutex_lock(right_fork);
-		state_log(philo, "has taken a fork");
-		pthread_mutex_lock(left_fork);
-		state_log(philo, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(left_fork);
-		state_log(philo, "has taken a fork");
-		pthread_mutex_lock(right_fork);
-		state_log(philo, "has taken a fork");
-	}
-	state_log(philo, "is eating");
-	mssleep(philo->data->time_to_eat);
-	pthread_mutex_unlock(left_fork);
-	pthread_mutex_unlock(right_fork);
-	return (TRUE);
-}
-
-t_bool	philo_think(t_philo *philo)
-{
-	state_log(philo, "is thinking");
-	return (TRUE);
-}
-
-t_bool	philo_sleep(t_philo *philo)
-{
-	state_log(philo, "is sleeping");
-	return (TRUE);
-}
-
-t_bool	philo_died(t_philo *philo)
-{
-	state_log(philo, "died");
-	return (TRUE);
 }
