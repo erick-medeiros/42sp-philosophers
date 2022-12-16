@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 17:13:06 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:22:27 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_bool	init_data(t_data *data, int argc, char *argv[])
 	data->philosophers = NULL;
 	data->forks = NULL;
 	data->dinner_is_over = FALSE;
-	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
+	if (pthread_mutex_init(&data->lock_log, NULL) != 0)
 		return (init_error(data));
-	if (pthread_mutex_init(&data->dinner_mutex, NULL) != 0)
+	if (pthread_mutex_init(&data->lock_dinner, NULL) != 0)
 		return (init_error(data));
 	if (!init_philosophers(data))
 		return (init_error(data));
@@ -60,9 +60,9 @@ static t_bool	init_philosophers(t_data *data)
 		philo->data = data;
 		philo->last_meal_time = data->start_time;
 		philo->amount_of_meals = 0;
-		if (pthread_mutex_init(&philo->last_meal_mutex, NULL) != 0)
+		if (pthread_mutex_init(&philo->lock_last_meal, NULL) != 0)
 			return (FALSE);
-		if (pthread_mutex_init(&philo->amount_of_meals_mutex, NULL) != 0)
+		if (pthread_mutex_init(&philo->lock_amount_of_meals, NULL) != 0)
 			return (FALSE);
 	}
 	return (TRUE);
@@ -105,8 +105,8 @@ void	destroy_data(t_data *data)
 		i = -1;
 		while (++i < data->num_of_philos)
 		{
-			pthread_mutex_destroy(&data->philosophers[i].last_meal_mutex);
-			pthread_mutex_destroy(&data->philosophers[i].amount_of_meals_mutex);
+			pthread_mutex_destroy(&data->philosophers[i].lock_last_meal);
+			pthread_mutex_destroy(&data->philosophers[i].lock_amount_of_meals);
 		}
 		free(data->philosophers);
 	}
@@ -117,7 +117,7 @@ void	destroy_data(t_data *data)
 			pthread_mutex_destroy(&data->forks[i]);
 		free(data->forks);
 	}
-	pthread_mutex_destroy(&data->log_mutex);
+	pthread_mutex_destroy(&data->lock_log);
 }
 
 static t_bool	init_error(t_data *data)

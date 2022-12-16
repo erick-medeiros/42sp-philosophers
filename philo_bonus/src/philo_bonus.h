@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 18:18:07 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:20:13 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ struct s_data
 	t_msec		start_time;
 	pthread_t	monitor_tid;
 	t_bool		dinner_is_over;
-	t_mutex		log_mutex;
-	t_mutex		dinner_mutex;
+	t_mutex		lock_log;
+	t_mutex		lock_dinner;
 	t_mutex		*forks;
 	t_philo		*philosophers;
 };
@@ -67,9 +67,9 @@ struct s_philo
 	int			num;
 	pthread_t	tid;
 	t_msec		last_meal_time;
-	t_mutex		last_meal_mutex;
+	t_mutex		lock_last_meal;
 	int			amount_of_meals;
-	t_mutex		amount_of_meals_mutex;
+	t_mutex		lock_amount_of_meals;
 	t_mutex		*left_fork;
 	t_mutex		*right_fork;
 	t_mutex		*first_fork;
