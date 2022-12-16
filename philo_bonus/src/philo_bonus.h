@@ -6,19 +6,22 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 17:13:29 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:18:07 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
-# include <pthread.h> // thread...
-# include <stdio.h> // printf
-# include <stdlib.h> // malloc, free
-# include <string.h> // memset
-# include <sys/time.h> // gettimeofday
-# include <unistd.h> // usleep, write
+# include <pthread.h>   // thread...
+# include <semaphore.h> // semaphores ...
+# include <signal.h>    // kill
+# include <stdio.h>     // printf
+# include <stdlib.h>    // malloc, free, exit
+# include <string.h>    // memset
+# include <sys/time.h>  // gettimeofday
+# include <sys/wait.h>  // waitpid
+# include <unistd.h>    // write, fork, usleep
 
 typedef enum e_bool		t_bool;
 typedef enum e_state	t_state;
