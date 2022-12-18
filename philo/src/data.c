@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/15 17:19:10 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:18:47 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	destroy_data(t_data *data)
 		free(data->forks);
 	}
 	pthread_mutex_destroy(&data->log_mutex);
+	pthread_mutex_destroy(&data->dinner_mutex);
 }
 
 static t_bool	init_error(t_data *data)
