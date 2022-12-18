@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:09:23 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 17:13:22 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:49:07 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,10 @@ t_msec	timestamp_in_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (s && *s)
+		write(fd, &(*s++), 1);
 }

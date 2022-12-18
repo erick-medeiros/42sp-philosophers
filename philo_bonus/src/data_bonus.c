@@ -6,14 +6,13 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 18:22:27 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/17 21:43:36 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
 static t_bool	init_philosophers(t_data *data);
-static t_bool	init_forks(t_data *data);
 static t_bool	init_error(t_data *data);
 
 t_bool	init_data(t_data *data, int argc, char *argv[])
@@ -28,15 +27,12 @@ t_bool	init_data(t_data *data, int argc, char *argv[])
 	if (argc == 6)
 		data->must_eat = ft_atoi(argv[5]);
 	data->philosophers = NULL;
-	data->forks = NULL;
-	data->dinner_is_over = FALSE;
-	if (pthread_mutex_init(&data->lock_log, NULL) != 0)
-		return (init_error(data));
-	if (pthread_mutex_init(&data->lock_dinner, NULL) != 0)
-		return (init_error(data));
+	data->ate_tid = 0;
+	data->forks = new_semaphore("/forks", data->num_of_philos);
+	data->lock_log = new_semaphore("/log", 1);
+	data->lock_dinner = new_semaphore("/dinner", 0);
+	data->lock_ate = new_semaphore("/ate", 0);
 	if (!init_philosophers(data))
-		return (init_error(data));
-	if (!init_forks(data))
 		return (init_error(data));
 	return (TRUE);
 }
@@ -54,49 +50,20 @@ static t_bool	init_philosophers(t_data *data)
 	{
 		philo = &data->philosophers[i];
 		philo->id = i;
+		philo->pid = 0;
 		philo->num = i + 1;
-		philo->is_pair = ((i + 1) % 2 != 0);
-		philo->tid = 0;
+		philo->monitor_tid = 0;
+		philo->dinner_tid = 0;
 		philo->data = data;
 		philo->last_meal_time = data->start_time;
 		philo->amount_of_meals = 0;
-		if (pthread_mutex_init(&philo->lock_last_meal, NULL) != 0)
-			return (FALSE);
-		if (pthread_mutex_init(&philo->lock_amount_of_meals, NULL) != 0)
-			return (FALSE);
+		philo->sem_name = philo_sem_name("/philo_meal_", philo->num);
+		philo->lock_meal = new_semaphore(philo->sem_name, 1);
 	}
 	return (TRUE);
 }
 
-static t_bool	init_forks(t_data *data)
-{
-	t_philo	*philo;
-	int		i;
-
-	data->forks = malloc(sizeof(t_mutex) * data->num_of_philos);
-	i = -1;
-	while (++i < data->num_of_philos)
-	{
-		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-			return (FALSE);
-		philo = &data->philosophers[i];
-		philo->left_fork = &data->forks[i];
-		philo->right_fork = &data->forks[philo->num % data->num_of_philos];
-		if (philo->is_pair)
-		{
-			philo->first_fork = philo->right_fork;
-			philo->second_fork = philo->left_fork;
-		}
-		else
-		{
-			philo->first_fork = philo->left_fork;
-			philo->second_fork = philo->right_fork;
-		}
-	}
-	return (TRUE);
-}
-
-void	destroy_data(t_data *data)
+void	destroy_data(t_data *data, t_bool delete_sem)
 {
 	int	i;
 
@@ -105,23 +72,28 @@ void	destroy_data(t_data *data)
 		i = -1;
 		while (++i < data->num_of_philos)
 		{
-			pthread_mutex_destroy(&data->philosophers[i].lock_last_meal);
-			pthread_mutex_destroy(&data->philosophers[i].lock_amount_of_meals);
+			sem_close(data->philosophers[i].lock_meal);
+			if (delete_sem)
+				sem_unlink(data->philosophers[i].sem_name);
+			free(data->philosophers[i].sem_name);
 		}
 		free(data->philosophers);
 	}
-	if (data->forks)
+	sem_close(data->forks);
+	sem_close(data->lock_log);
+	sem_close(data->lock_dinner);
+	sem_close(data->lock_ate);
+	if (delete_sem)
 	{
-		i = -1;
-		while (++i < data->num_of_philos)
-			pthread_mutex_destroy(&data->forks[i]);
-		free(data->forks);
+		sem_unlink("/forks");
+		sem_unlink("/log");
+		sem_unlink("/dinner");
+		sem_unlink("/ate");
 	}
-	pthread_mutex_destroy(&data->lock_log);
 }
 
 static t_bool	init_error(t_data *data)
 {
-	destroy_data(data);
+	destroy_data(data, TRUE);
 	return (FALSE);
 }

@@ -11,8 +11,8 @@ OBJ_DIR = obj/
 HEADERS = src/philo_bonus.h
 
 FILES = main_bonus.c
-FILES += check_bonus.c data_bonus.c dinner_bonus.c finish_bonus.c
-FILES += log_bonus.c routine_bonus.c utils_bonus.c
+FILES += check_bonus.c data_bonus.c dinner_bonus.c finish_bonus.c log_bonus.c
+FILES += routine_bonus.c semaphore_bonus.c string_bonus.c utils_bonus.c
 
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(FILES:.c=.o))
