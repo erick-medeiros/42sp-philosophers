@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 15:14:16 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:29:30 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ struct s_data
 	pthread_t	ate_tid;
 	sem_t		*lock_log;
 	sem_t		*lock_dinner;
+	sem_t		*dinner_is_over;
 	sem_t		*lock_ate;
 	sem_t		*forks;
 	t_philo		*philosophers;

@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/17 22:58:10 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:18:34 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	philo_routine(t_philo *philo)
 {
 	pthread_create(&philo->monitor_tid, NULL, monitor_routine, (void *)philo);
 	pthread_create(&philo->dinner_tid, NULL, dinner_routine, (void *)philo);
-	sem_wait(philo->data->lock_dinner);
-	sem_post(philo->data->lock_dinner);
-	pthread_detach(philo->dinner_tid);
-	pthread_detach(philo->monitor_tid);
+	pthread_join(philo->monitor_tid, NULL);
+	pthread_join(philo->dinner_tid, NULL);
 	destroy_data(philo->data, FALSE);
 	exit(0);
 }
@@ -60,8 +58,8 @@ int	philo_eat(t_philo *philo)
 	}
 	state_log(philo->data, philo->num, TAKE_FORK);
 	state_log(philo->data, philo->num, TAKE_FORK);
-	update_info_of_meal(philo);
 	state_log(philo->data, philo->num, EATING);
+	update_info_of_meal(philo);
 	ft_mssleep(philo->data->time_to_eat);
 	sem_post(philo->data->forks);
 	sem_post(philo->data->forks);
