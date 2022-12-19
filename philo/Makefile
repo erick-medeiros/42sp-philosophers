@@ -50,7 +50,9 @@ bear:
 	bear -- make re
 
 leaks:
-	valgrind --tool=helgrind --history-level=approx ./$(NAME) 5 500 200 200
+	clear
+	valgrind -q --tool=helgrind ./$(NAME) 5 500 200 200
+	valgrind -q --tool=drd ./$(NAME) 5 500 200 200
 
 tests: norm
 	@make -s -C tests
