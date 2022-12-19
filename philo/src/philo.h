@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 16:58:03 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 10:11:11 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ struct s_philo
 	int			num;
 	pthread_t	tid;
 	t_msec		last_meal_time;
-	t_mutex		last_meal_mutex;
 	int			amount_of_meals;
-	t_mutex		amount_of_meals_mutex;
+	t_mutex		meal_mutex;
 	t_mutex		*left_fork;
 	t_mutex		*right_fork;
 	t_mutex		*first_fork;
@@ -90,10 +89,8 @@ int		philo_think(t_philo *philo);
 void	*monitor_routine(void *arg);
 
 // dinner
-int		get_amount_of_meals_remaining(t_philo *philo);
-void	set_amount_of_meals(t_philo *philo);
+void	update_info_of_meal(t_philo *philo);
 t_msec	get_last_meal_time(t_philo *philo);
-void	set_last_meal_time(t_philo *philo);
 t_bool	everyone_finished_eating(t_data *data);
 
 // finish

@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 19:18:47 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 09:35:59 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ static t_bool	init_philosophers(t_data *data)
 		philo->data = data;
 		philo->last_meal_time = data->start_time;
 		philo->amount_of_meals = 0;
-		if (pthread_mutex_init(&philo->last_meal_mutex, NULL) != 0)
-			return (FALSE);
-		if (pthread_mutex_init(&philo->amount_of_meals_mutex, NULL) != 0)
+		if (pthread_mutex_init(&philo->meal_mutex, NULL) != 0)
 			return (FALSE);
 	}
 	return (TRUE);
@@ -104,10 +102,7 @@ void	destroy_data(t_data *data)
 	{
 		i = -1;
 		while (++i < data->num_of_philos)
-		{
-			pthread_mutex_destroy(&data->philosophers[i].last_meal_mutex);
-			pthread_mutex_destroy(&data->philosophers[i].amount_of_meals_mutex);
-		}
+			pthread_mutex_destroy(&data->philosophers[i].meal_mutex);
 		free(data->philosophers);
 	}
 	if (data->forks)

@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/16 16:58:13 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 09:43:18 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	philo_eat(t_philo *philo)
 	}
 	state_log(philo, TAKE_FORK);
 	state_log(philo, TAKE_FORK);
-	set_last_meal_time(philo);
-	set_amount_of_meals(philo);
+	update_info_of_meal(philo);
 	state_log(philo, EATING);
 	ft_mssleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->first_fork);
