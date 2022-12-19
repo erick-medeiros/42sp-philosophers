@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:46:33 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/17 23:02:04 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:13:54 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ void	*monitor_routine(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (philo->data->must_eat != -1)
-		{
-			if (get_amount_of_meals_remaining(philo) == 0)
-				sem_post(philo->data->lock_ate);
-		}
 		if (get_last_meal_time(philo) > philo->data->time_to_die)
 		{
 			state_log(philo->data, philo->num, DIED);

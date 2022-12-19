@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/17 21:44:50 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:14:16 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	*monitor_routine(void *arg);
 
 // dinner
 void	update_info_of_meal(t_philo *philo);
-int		get_amount_of_meals_remaining(t_philo *philo);
 t_msec	get_last_meal_time(t_philo *philo);
 void	*all_ate_routine(void *arg);
 
