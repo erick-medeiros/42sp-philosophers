@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 09:43:18 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:18:35 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,11 @@ void	*monitor_routine(void *arg)
 	while (!dinner_is_over(data))
 	{
 		if (everyone_finished_eating(data))
-		{
-			finish_dinner(data);
-			return (NULL);
-		}
+			return (finish_dinner(data));
 		i = -1;
 		while (++i < data->num_of_philos)
-		{
 			if (get_last_meal_time(&data->philosophers[i]) > data->time_to_die)
-			{
-				state_log(&data->philosophers[i], DIED);
-				finish_dinner(data);
-				return (NULL);
-			}
-		}
+				return (announce_death(&data->philosophers[i]));
 		ft_mssleep(5);
 	}
 	return (NULL);

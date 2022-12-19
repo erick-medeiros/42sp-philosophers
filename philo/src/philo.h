@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 10:11:11 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:15:36 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ t_bool	everyone_finished_eating(t_data *data);
 
 // finish
 t_bool	dinner_is_over(t_data *data);
-void	finish_dinner(t_data *data);
+void	*finish_dinner(t_data *data);
+void	*announce_death(t_philo *philo);
 
 // logs
 void	state_log(t_philo *philo, t_state state);
