@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 12:15:36 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 14:43:56 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ struct s_data
 	pthread_t	monitor_tid;
 	t_bool		dinner_is_over;
 	t_mutex		log_mutex;
+	int			how_many_ate;
+	t_mutex		all_ate_mutex;
 	t_mutex		dinner_mutex;
 	t_mutex		*forks;
 	t_philo		*philosophers;
@@ -91,7 +93,6 @@ void	*monitor_routine(void *arg);
 // dinner
 void	update_info_of_meal(t_philo *philo);
 t_msec	get_last_meal_time(t_philo *philo);
-t_bool	everyone_finished_eating(t_data *data);
 
 // finish
 t_bool	dinner_is_over(t_data *data);

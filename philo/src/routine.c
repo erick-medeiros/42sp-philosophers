@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:12:55 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 12:18:35 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:49:03 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	philo_eat(t_philo *philo)
 	}
 	state_log(philo, TAKE_FORK);
 	state_log(philo, TAKE_FORK);
-	update_info_of_meal(philo);
 	state_log(philo, EATING);
+	update_info_of_meal(philo);
 	ft_mssleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
@@ -81,8 +81,6 @@ void	*monitor_routine(void *arg)
 	data = (t_data *)arg;
 	while (!dinner_is_over(data))
 	{
-		if (everyone_finished_eating(data))
-			return (finish_dinner(data));
 		i = -1;
 		while (++i < data->num_of_philos)
 			if (get_last_meal_time(&data->philosophers[i]) > data->time_to_die)
