@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 19:51:59 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/17 18:25:24 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:56:55 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	state_log(t_data *data, int philo_num, t_state state)
 		str = "is sleeping";
 	else if (state == THINKING && !dinner_is_over(data))
 		str = "is thinking";
-	else if (state == DIED)
+	else if (state == DIED && !dinner_is_over(data))
 		str = "died";
 	if (str)
 		printf("%5li %2i %s\n", timestamp, philo_num, str);
