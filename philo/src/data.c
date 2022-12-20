@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 12:43:50 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:53:24 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool	init_data(t_data *data, int argc, char *argv[])
 	data->philosophers = NULL;
 	data->forks = NULL;
 	data->dinner_is_over = FALSE;
-	data->how_many_ate = 0;
+	data->all_ate = 0;
 	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
 		return (init_error(data));
 	if (pthread_mutex_init(&data->dinner_mutex, NULL) != 0)

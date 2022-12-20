@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 15:29:30 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:50:38 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ struct s_data
 	int			time_to_sleep;
 	int			must_eat;
 	t_msec		start_time;
-	pthread_t	ate_tid;
 	sem_t		*lock_log;
 	sem_t		*lock_dinner;
 	sem_t		*dinner_is_over;
 	sem_t		*lock_ate;
+	sem_t		*all_ate;
 	sem_t		*forks;
 	t_philo		*philosophers;
 };
@@ -97,6 +97,7 @@ void	*monitor_routine(void *arg);
 
 // dinner
 void	update_info_of_meal(t_philo *philo);
+void	ate_the_mandatory_meals(t_philo *philo);
 t_msec	get_last_meal_time(t_philo *philo);
 void	*all_ate_routine(void *arg);
 

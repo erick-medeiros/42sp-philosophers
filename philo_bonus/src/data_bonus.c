@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:35:44 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 15:30:05 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:50:58 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ t_bool	init_data(t_data *data, int argc, char *argv[])
 	if (argc == 6)
 		data->must_eat = ft_atoi(argv[5]);
 	data->philosophers = NULL;
-	data->ate_tid = 0;
 	data->forks = new_semaphore("/forks", data->num_of_philos);
 	data->lock_log = new_semaphore("/log", 1);
 	data->lock_dinner = new_semaphore("/dinner", 1);
 	data->dinner_is_over = new_semaphore("/dinner_is_over", 0);
-	data->lock_ate = new_semaphore("/ate", 0);
+	data->lock_ate = new_semaphore("/ate", 1);
+	data->all_ate = new_semaphore("/all_ate", 0);
 	if (!init_philosophers(data))
 		return (init_error(data));
 	return (TRUE);

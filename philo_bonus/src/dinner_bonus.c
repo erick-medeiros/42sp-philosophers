@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:27:04 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 15:14:23 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:54:32 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,19 @@ void	update_info_of_meal(t_philo *philo)
 		ate_at_least = TRUE;
 	sem_post(philo->lock_meal);
 	if (philo->data->must_eat > 0 && ate_at_least)
-		sem_post(philo->data->lock_ate);
+		ate_the_mandatory_meals(philo);
+}
+
+void	ate_the_mandatory_meals(t_philo *philo)
+{
+	int	all_ate;
+
+	sem_wait(philo->data->lock_ate);
+	sem_post(philo->data->all_ate);
+	all_ate = *(int *)philo->data->all_ate;
+	if (all_ate == philo->data->num_of_philos)
+		finish_dinner(philo->data);
+	sem_post(philo->data->lock_ate);
 }
 
 t_msec	get_last_meal_time(t_philo *philo)
@@ -35,20 +47,4 @@ t_msec	get_last_meal_time(t_philo *philo)
 	last_meal = timestamp_in_ms() - philo->last_meal_time;
 	sem_post(philo->lock_meal);
 	return (last_meal);
-}
-
-void	*all_ate_routine(void *arg)
-{
-	t_data	*data;
-	int		i;
-
-	data = (t_data *)arg;
-	if (data->must_eat != -1)
-	{
-		i = -1;
-		while (++i < data->num_of_philos)
-			sem_wait(data->lock_ate);
-		finish_dinner(data);
-	}
-	return (NULL);
 }

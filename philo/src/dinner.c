@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:27:04 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 14:44:05 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:50:03 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ void	update_info_of_meal(t_philo *philo)
 		ate_at_least = TRUE;
 	pthread_mutex_unlock(&philo->meal_mutex);
 	if (philo->data->must_eat > 0 && ate_at_least)
-	{
-		pthread_mutex_lock(&philo->data->all_ate_mutex);
-		philo->data->how_many_ate++;
-		if (philo->data->how_many_ate == philo->data->num_of_philos)
-			finish_dinner(philo->data);
-		pthread_mutex_unlock(&philo->data->all_ate_mutex);
-	}
+		ate_the_mandatory_meals(philo);
+}
+
+void	ate_the_mandatory_meals(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->all_ate_mutex);
+	philo->data->all_ate++;
+	if (philo->data->all_ate == philo->data->num_of_philos)
+		finish_dinner(philo->data);
+	pthread_mutex_unlock(&philo->data->all_ate_mutex);
 }
 
 t_msec	get_last_meal_time(t_philo *philo)
