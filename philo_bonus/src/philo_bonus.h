@@ -6,7 +6,7 @@
 /*   By: eandre-f <eandre-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 10:42:43 by eandre-f          #+#    #+#             */
-/*   Updated: 2022/12/19 16:50:38 by eandre-f         ###   ########.fr       */
+/*   Updated: 2022/12/20 17:08:41 by eandre-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char	*philo_sem_name(char *name, int philo_num);
 
 // destroy
 void	destroy_data(t_data *data, t_bool delete_sem);
-void	destroy_semaphore(const char *name, sem_t *sem);
 
 // routine
 void	philo_routine(t_philo *philo);
